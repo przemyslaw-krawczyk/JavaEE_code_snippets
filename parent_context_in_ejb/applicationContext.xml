@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean name="parentContextLoader" class="com.drq.lm.helpers.ParentContextLoader">
+        <property name="locatorFactorySelector" value="classpath:config/spring/applicationContext-main.xml"/>
+        <property name="parentContextKey" value="applicationContext-main"/>
+    </bean>
+    <bean name="ejb_applicationContext" class="org.springframework.context.support.ClassPathXmlApplicationContext">
+        <constructor-arg>
+            <list>
+                <value>config/spring/spring.xml</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg>
+            <bean factory-bean="parentContextLoader" factory-method="getParentContext"/>
+        </constructor-arg>
+    </bean>
+</beans>
