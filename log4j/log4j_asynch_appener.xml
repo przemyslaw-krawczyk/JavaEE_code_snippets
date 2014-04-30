@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender class="org.apache.log4j.DailyRollingFileAppender" name="fileappender">
+        <param value="'.'yyyy-MM-dd" name="DatePattern"/>
+        <param value="./logs/int/int.log" name="File"/>
+        <param value="5" name="MaxBackupIndex"/>
+        <param value="100MB" name="MaxFileSize"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param value="%d [%p] %C - %m%n" name="ConversionPattern"/>
+        </layout>
+    </appender>
+    <appender class="org.apache.log4j.ConsoleAppender" name="stdout">
+        <param value="System.out" name="Target"/>
+        <param value="ERROR" name="Threshold"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param value="%d [%p] %C - %m%n" name="ConversionPattern"/>
+        </layout>
+    </appender>
+	
+    
+	<appender name="intFileappender" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="500"/>
+		<param name="locationInfo" value="true"/>
+        <appender-ref ref="intTargetFileappender"/>
+    </appender>
+	
+    <appender class="org.apache.log4j.DailyRollingFileAppender" name="intTargetFileappender">
+        <param value="'.'yyyy-MM-dd" name="DatePattern"/>
+        <param value="./logs/int/2_int.log" name="File"/>
+        <param value="5" name="MaxBackupIndex"/>
+        <param value="100MB" name="MaxFileSize"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param value="%d [%p] [policyId=%X{policyId}] %C - %m%n" name="ConversionPattern"/>
+        </layout>
+    </appender>
+    
+    <logger name="org.apache.axis">
+        <level value="debug"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="fileappender"/>
+    </logger>
+    <logger name="org.apache.cxf">
+        <level value="debug"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="fileappender"/>
+    </logger>
+    <logger name="org.hibernate">
+        <level value="debug"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="fileappender"/>
+    </logger>
+    <logger name="org.quartz">
+        <level value="debug"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="fileappender"/>
+    </logger>
+    <logger name="org.springframework">
+        <level value="info"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="fileappender"/>
+    </logger>
+    <logger name="pl.xxx">
+        <level value="debug"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="fileappender"/>
+    </logger>
+    <logger additivity="false" name="pl.xxx.app.ws.generated.ext.client.int">
+        <level value="debug"/>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="intFileappender"/>
+    </logger>
+    <root>
+        <level value="debug"/>
+    </root>
+</log4j:configuration>
