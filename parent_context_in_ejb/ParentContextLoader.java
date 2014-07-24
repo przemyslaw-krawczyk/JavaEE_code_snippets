@@ -10,8 +10,9 @@ import org.springframework.context.access.ContextSingletonBeanFactoryLocator;
 import javax.servlet.ServletContext;
 
 /**
-
- */
+* Find parent singleton context according to config.
+* Expose method to get this context as BeanFactoryReference.
+*/
 public class ParentContextLoader implements InitializingBean, DisposableBean{
 
     private static final Logger logger = Logger.getLogger(ParentContextLoader.class);
